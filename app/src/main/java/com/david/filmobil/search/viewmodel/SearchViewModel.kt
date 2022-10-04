@@ -36,7 +36,7 @@ class SearchViewModel @Inject constructor(
             searchHistoryQuery = searchQuery,
             searchHistoryInsertionDate = System.currentTimeMillis()
         )
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             searchHistoryDao.insertIntoSearchHistory(searchHistoryModel)
         }
     }

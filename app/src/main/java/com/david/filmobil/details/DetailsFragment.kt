@@ -16,7 +16,6 @@ import com.david.filmobil.network.result.ApiResult
 import com.david.filmobil.utils.loadImageFromUrl
 import com.david.filmobil.utils.repeatOnLifecycleStarted
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
@@ -38,7 +37,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         }
 
         repeatOnLifecycleStarted {
-            detailsViewModel.isMovieInFavorites.collectLatest { isInFavorites ->
+            detailsViewModel.isMovieInFavorites.collect { isInFavorites ->
                 binding.addToFavorites.icon = AppCompatResources.getDrawable(
                     requireContext(),
                     if (isInFavorites) R.drawable.ic_baseline_favorite else R.drawable.ic_baseline_favorite_border

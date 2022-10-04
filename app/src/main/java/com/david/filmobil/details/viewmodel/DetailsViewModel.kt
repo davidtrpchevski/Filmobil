@@ -8,7 +8,6 @@ import com.david.filmobil.database.dao.FavoritesDao
 import com.david.filmobil.database.dao.WatchedMoviesDao
 import com.david.filmobil.details.DetailsFragmentArgs
 import com.david.filmobil.details.model.MovieDetailsModel
-import com.david.filmobil.di.dispatchers.IoDispatcher
 import com.david.filmobil.network.RemoteService
 import com.david.filmobil.network.result.ApiResult
 import com.david.filmobil.network.result.getResultAsSuccess
@@ -16,7 +15,6 @@ import com.david.filmobil.network.result.unpackResult
 import com.david.filmobil.utils.mapToMovieDbModel
 import com.david.filmobil.utils.mapToWatchedMovieModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -27,7 +25,6 @@ class DetailsViewModel @Inject constructor(
     private val remoteService: RemoteService,
     savedStateHandle: SavedStateHandle,
     private val toaster: Toaster,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val favoritesDao: FavoritesDao,
     private val watchedMoviesDao: WatchedMoviesDao
 ) : ViewModel() {
@@ -66,7 +63,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun handleMovieIntoDatabase() {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch {
             val fetchedMovieDetails =
                 _movieDetails.value.getResultAsSuccess()?.mapToMovieDbModel() ?: return@launch
             if (_isMovieInFavorites.value) {
