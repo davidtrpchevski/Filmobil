@@ -10,6 +10,7 @@ import com.david.filmobil.database.dao.WatchlistMoviesDao
 import com.david.filmobil.database.database.MoviesDatabase
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
@@ -24,22 +25,22 @@ object DatabaseModule {
         Room.databaseBuilder(context, MoviesDatabase::class.java, MOVIE_DB_NAME).build()
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideMovieDBDao(moviesDatabase: MoviesDatabase): FavoritesDao =
         moviesDatabase.favoritesDao()
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideSearchHistoryDao(moviesDatabase: MoviesDatabase): SearchHistoryDao =
         moviesDatabase.searchHistoryDao()
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideWatchedMoviesDao(moviesDatabase: MoviesDatabase): WatchedMoviesDao =
         moviesDatabase.watchedMoviesDao()
 
     @Provides
-    @Singleton
+    @Reusable
     fun provideWatchlistMoviesDao(moviesDatabase: MoviesDatabase): WatchlistMoviesDao =
         moviesDatabase.watchlistMoviesDao()
 }

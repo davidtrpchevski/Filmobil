@@ -22,11 +22,9 @@ import javax.inject.Singleton
 object NetworkingModule {
 
     @Provides
-    @Singleton
     fun provideMoshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
 
     @Provides
-    @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {
             level =
@@ -34,7 +32,6 @@ object NetworkingModule {
         }
 
     @Provides
-    @Singleton
     fun provideOkHttp(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         connectivityInterceptor: ConnectivityInterceptor
@@ -45,6 +42,7 @@ object NetworkingModule {
             .build()
 
     @Provides
+    @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         moshiConverterFactory: MoshiConverterFactory
@@ -56,16 +54,13 @@ object NetworkingModule {
             .build()
 
     @Provides
-    @Singleton
     fun provideRemoteService(retrofit: Retrofit): RemoteService = retrofit.create()
 
     @Provides
-    @Singleton
     fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     @Provides
-    @Singleton
     fun provideConnectivityInterceptor(connectivityManager: ConnectivityManager): ConnectivityInterceptor =
         ConnectivityInterceptor(connectivityManager)
 }
