@@ -3,6 +3,7 @@ package com.david.filmobil.searchresult.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.crazylegend.toaster.Toaster
 import com.david.filmobil.di.dispatchers.IoDispatcher
 import com.david.filmobil.network.RemoteService
 import com.david.filmobil.network.result.ApiResult
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class SearchResultViewModel @Inject constructor(
     private val remoteService: RemoteService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val toaster: Toaster,
 ) : ViewModel() {
 
     private val args get() = SearchResultFragmentArgs.fromSavedStateHandle(savedStateHandle)
@@ -35,7 +37,21 @@ class SearchResultViewModel @Inject constructor(
 
     private fun searchForMovieByTitle() {
         viewModelScope.launch(ioDispatcher) {
-            _searchData.value = remoteService.getMoviesByTitle(searchQuery).unpackResult()
+            try {
+                _searchData.value = remoteService.getMoviesByTitle(searchQuery).unpackResult()
+            } catch (throwable: Throwable) {
+                showErrorToast(ApiResult.Error(throwable))
+            }
         }
     }
+
+
+    fun <T> showErrorToast(errorResult: ApiResult<T>) {
+        when (errorResult) {
+            is ApiResult.ApiError -> toaster.shortToast("Body: ${errorResult.responseBody?.string()} & Code: ${errorResult.errorCode}")
+            is ApiResult.Error -> toaster.shortToast(errorResult.throwable.toString())
+            else -> {}
+        }
+    }
+
 }

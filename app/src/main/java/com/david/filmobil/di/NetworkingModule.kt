@@ -1,10 +1,14 @@
 package com.david.filmobil.di
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.david.filmobil.BuildConfig
 import com.david.filmobil.network.RemoteService
+import com.david.filmobil.network.connectivity.ConnectivityInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,8 +35,14 @@ object NetworkingModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
-        OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build()
+    fun provideOkHttp(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        connectivityInterceptor: ConnectivityInterceptor
+    ): OkHttpClient =
+        OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(connectivityInterceptor)
+            .build()
 
     @Provides
     fun provideRetrofit(
@@ -48,4 +58,14 @@ object NetworkingModule {
     @Provides
     @Singleton
     fun provideRemoteService(retrofit: Retrofit): RemoteService = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    @Provides
+    @Singleton
+    fun provideConnectivityInterceptor(connectivityManager: ConnectivityManager): ConnectivityInterceptor =
+        ConnectivityInterceptor(connectivityManager)
 }

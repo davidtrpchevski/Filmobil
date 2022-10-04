@@ -42,7 +42,11 @@ class HomeViewModel @Inject constructor(
     private fun fetchMovies(nextPage: Int = page) {
         _resultMoviesList.value = ApiResult.Loading
         viewModelScope.launch(ioDispatcher) {
-            _resultMoviesList.value = remoteService.getMoviesList(nextPage).unpackResult()
+            try {
+                _resultMoviesList.value = remoteService.getMoviesList(nextPage).unpackResult()
+            } catch (throwable: Throwable) {
+                showErrorToast(ApiResult.Error(throwable))
+            }
         }
     }
 

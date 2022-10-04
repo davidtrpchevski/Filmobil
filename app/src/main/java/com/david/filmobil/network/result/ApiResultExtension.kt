@@ -2,13 +2,13 @@ package com.david.filmobil.network.result
 
 import retrofit2.Response
 
-fun <T> Response<T>.unpackResult() =
+fun <T> Response<T>.unpackResult(): ApiResult<T> =
     if (isSuccessful) {
-        val result = body()
-        if (result == null) {
+        val data = body()
+        if (data == null) {
             ApiResult.Error(NullPointerException())
         } else {
-            ApiResult.Success(result)
+            ApiResult.Success(data)
         }
     } else {
         ApiResult.ApiError(errorBody(), code())
