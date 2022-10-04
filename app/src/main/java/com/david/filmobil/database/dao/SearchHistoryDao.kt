@@ -10,7 +10,7 @@ import com.david.filmobil.database.entities.SearchHistoryModel
 @Dao
 interface SearchHistoryDao {
     @Query("SELECT * FROM search_history WHERE (:searchQuery IS NULL OR `searchHistoryQuery` GLOB '*' || :searchQuery|| '*' ) ORDER BY searchHistoryInsertionDate DESC")
-    fun getAllSearchHistory(searchQuery: String? = null): List<SearchHistoryModel>
+    suspend fun getAllSearchHistory(searchQuery: String? = null): List<SearchHistoryModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertIntoSearchHistory(searchHistoryModel: SearchHistoryModel)

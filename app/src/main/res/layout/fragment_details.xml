@@ -139,4 +139,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Button.Circle" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_to_watchlist"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="12dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        app:icon="@drawable/ic_baseline_movie"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_to_watched"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Button.Circle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

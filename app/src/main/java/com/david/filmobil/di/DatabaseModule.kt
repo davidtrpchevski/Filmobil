@@ -6,6 +6,7 @@ import com.david.filmobil.constants.MOVIE_DB_NAME
 import com.david.filmobil.database.dao.FavoritesDao
 import com.david.filmobil.database.dao.SearchHistoryDao
 import com.david.filmobil.database.dao.WatchedMoviesDao
+import com.david.filmobil.database.dao.WatchlistMoviesDao
 import com.david.filmobil.database.database.MoviesDatabase
 import dagger.Module
 import dagger.Provides
@@ -36,4 +37,9 @@ object DatabaseModule {
     @Singleton
     fun provideWatchedMoviesDao(moviesDatabase: MoviesDatabase): WatchedMoviesDao =
         moviesDatabase.watchedMoviesDao()
+
+    @Provides
+    @Singleton
+    fun provideWatchlistMoviesDao(moviesDatabase: MoviesDatabase): WatchlistMoviesDao =
+        moviesDatabase.watchlistMoviesDao()
 }

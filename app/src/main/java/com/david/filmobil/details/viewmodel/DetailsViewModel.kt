@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.crazylegend.toaster.Toaster
 import com.david.filmobil.database.dao.FavoritesDao
 import com.david.filmobil.database.dao.WatchedMoviesDao
+import com.david.filmobil.database.dao.WatchlistMoviesDao
 import com.david.filmobil.details.DetailsFragmentArgs
 import com.david.filmobil.details.model.MovieDetailsModel
 import com.david.filmobil.network.RemoteService
@@ -14,6 +15,7 @@ import com.david.filmobil.network.result.getResultAsSuccess
 import com.david.filmobil.network.result.unpackResult
 import com.david.filmobil.utils.mapToMovieDbModel
 import com.david.filmobil.utils.mapToWatchedMovieModel
+import com.david.filmobil.utils.mapToWatchlistModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,7 +28,8 @@ class DetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val toaster: Toaster,
     private val favoritesDao: FavoritesDao,
-    private val watchedMoviesDao: WatchedMoviesDao
+    private val watchedMoviesDao: WatchedMoviesDao,
+    private val watchlistMoviesDao: WatchlistMoviesDao
 ) : ViewModel() {
 
     private val args = DetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
@@ -79,6 +82,14 @@ class DetailsViewModel @Inject constructor(
         viewModelScope.launch {
             watchedMoviesDao.insertWatchedMovie(
                 _movieDetails.value.getResultAsSuccess()?.mapToWatchedMovieModel() ?: return@launch
+            )
+        }
+    }
+
+    fun insertMovieToWatchlist() {
+        viewModelScope.launch {
+            watchlistMoviesDao.insertMovieToWatchlist(
+                _movieDetails.value.getResultAsSuccess()?.mapToWatchlistModel() ?: return@launch
             )
         }
     }

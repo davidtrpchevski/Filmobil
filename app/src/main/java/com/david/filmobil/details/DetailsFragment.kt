@@ -52,6 +52,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
         binding.addToWatched.setOnClickListener {
             detailsViewModel.insertMovieToWatchedList()
         }
+
+        binding.addToWatchlist.setOnClickListener {
+            detailsViewModel.insertMovieToWatchlist()
+        }
     }
 
     private fun fillMovieDetails(movie: MovieDetailsModel) {
