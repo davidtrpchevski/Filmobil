@@ -20,6 +20,7 @@ buildscript {
         junit_version = '4.13.2'
         work_version = '2.7.1'
         hilt_work = '1.0.0'
+        crashlytics_version = '2.9.1'
     }
 }
 plugins {
@@ -28,6 +29,8 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
     id 'androidx.navigation.safeargs' version "$nav_version" apply false
     id 'com.google.dagger.hilt.android' version "$hilt_version" apply false
+    id 'com.google.gms.google-services' version '4.3.10' apply false
+    id 'com.google.firebase.crashlytics' version "$crashlytics_version" apply false
 }
 task clean(type: Delete) {
     delete rootProject.buildDir

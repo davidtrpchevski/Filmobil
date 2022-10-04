@@ -37,10 +37,8 @@ class SearchResultViewModel @Inject constructor(
 
     private fun searchForMovieByTitle() {
         viewModelScope.launch(ioDispatcher) {
-            try {
-                _searchData.value = remoteService.getMoviesByTitle(searchQuery).unpackResult()
-            } catch (throwable: Throwable) {
-                showErrorToast(ApiResult.Error(throwable))
+            _searchData.value = unpackResult {
+                remoteService.getMoviesByTitle(searchQuery)
             }
         }
     }

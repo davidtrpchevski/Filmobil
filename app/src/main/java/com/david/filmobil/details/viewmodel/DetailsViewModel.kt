@@ -54,10 +54,8 @@ class DetailsViewModel @Inject constructor(
 
     private suspend fun getMovieDetails() {
         _movieDetails.value = ApiResult.Loading
-        try {
-            _movieDetails.value = remoteService.getMovie(movieId).unpackResult()
-        } catch (throwable: Throwable) {
-            showErrorToast(ApiResult.Error(throwable))
+        _movieDetails.value = unpackResult {
+            remoteService.getMovie(movieId)
         }
     }
 

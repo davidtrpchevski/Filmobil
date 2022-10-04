@@ -10,7 +10,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.crazylegend.view.setOnClickListenerCooldown
 import com.crazylegend.viewbinding.viewBinding
 import com.david.filmobil.databinding.ActivityMainBinding
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -25,6 +27,9 @@ class MainActivity : AppCompatActivity() {
             R.id.settingsFragment,
         )
     )
+
+    @Inject
+    lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

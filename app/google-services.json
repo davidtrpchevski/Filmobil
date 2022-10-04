@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "419856759681",
+    "project_id": "filmobil-4e986",
+    "storage_bucket": "filmobil-4e986.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419856759681:android:b0c080f52ff6964d774680",
+        "android_client_info": {
+          "package_name": "com.david.filmobil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "419856759681-hgvevuhajgg4mb9bl561is49vmgdim4n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.david.filmobil",
+            "certificate_hash": "9b85a12b1cf6271630ebefc2c4ae76cb87bc3a45"
+          }
+        },
+        {
+          "client_id": "419856759681-ea6afme2bfvjo7a630uc39fmdj68tr38.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4BL0mBO9PukuLJ9M5Npseo51GaDTc6ok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "419856759681-ea6afme2bfvjo7a630uc39fmdj68tr38.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
