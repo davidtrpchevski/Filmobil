@@ -1,7 +1,7 @@
-package com.david.filmobil.di.dispatchers
+package com.david.filmobil.di.qualifiers
 
 import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class IoDispatcher
+annotation class DefaultSharedPref
