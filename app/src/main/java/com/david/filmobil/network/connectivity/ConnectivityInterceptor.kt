@@ -20,9 +20,9 @@ class ConnectivityInterceptor(private val connectivityManager: ConnectivityManag
     }
 
     private fun isConnected(): Boolean {
-        return networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true ||
+        return networkCapabilities != null && (networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true ||
                 networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true ||
                 networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) == true ||
-                networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) == true
+                networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) == true)
     }
 }
