@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.david.filmobil.common.DataSaverPrefUtil
 import com.david.filmobil.databinding.ItemViewSearchResultBinding
 import com.david.filmobil.searchresult.model.SearchResultModel
 import com.david.filmobil.utils.diffUtilCallback
 import javax.inject.Inject
 
-class SearchResultAdapter @Inject constructor() :
+class SearchResultAdapter @Inject constructor(private val dataSaverPrefUtil: DataSaverPrefUtil) :
     ListAdapter<SearchResultModel, SearchResultViewHolder>(diffUtilCallback<SearchResultModel>()) {
 
     var onItemClick: ((SearchResultModel) -> Unit)? = null
@@ -28,6 +29,6 @@ class SearchResultAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), dataSaverPrefUtil.isDataSavingEnabled)
     }
 }

@@ -5,13 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.david.filmobil.common.DataSaverPrefUtil
 import com.david.filmobil.database.entities.FavoriteMovieModel
 import com.david.filmobil.databinding.ItemViewFavoriteMovieBinding
 import com.david.filmobil.favorites.viewholder.FavoritesMovieViewHolder
 import com.david.filmobil.utils.diffUtilCallback
 import javax.inject.Inject
 
-class FavoritesMovieAdapter @Inject constructor() :
+class FavoritesMovieAdapter @Inject constructor(private val dataSaverPrefUtil: DataSaverPrefUtil) :
     ListAdapter<FavoriteMovieModel, FavoritesMovieViewHolder>(
         diffUtilCallback<FavoriteMovieModel>()
     ) {
@@ -41,6 +42,6 @@ class FavoritesMovieAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: FavoritesMovieViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), dataSaverPrefUtil.isDataSavingEnabled)
     }
 }

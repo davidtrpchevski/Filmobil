@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.david.filmobil.common.DataSaverPrefUtil
 import com.david.filmobil.database.entities.WatchedMovieModel
 import com.david.filmobil.databinding.ItemViewWatchedMovieBinding
 import com.david.filmobil.utils.diffUtilCallback
 import javax.inject.Inject
 
-class WatchedAdapter @Inject constructor() :
+class WatchedAdapter @Inject constructor(private val dataSavingEnabled: DataSaverPrefUtil) :
     ListAdapter<WatchedMovieModel, WatchedViewHolder>(diffUtilCallback<WatchedMovieModel>()) {
 
     var onClickListener: ((WatchedMovieModel) -> Unit)? = null
@@ -28,6 +29,6 @@ class WatchedAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: WatchedViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), dataSavingEnabled.isDataSavingEnabled)
     }
 }
