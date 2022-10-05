@@ -1,7 +1,11 @@
 package com.david.filmobil.utils
 
 import android.annotation.SuppressLint
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
+import coil.load
+import coil.request.Disposable
+import coil.request.ImageRequest
 import com.david.filmobil.BuildConfig
 import com.david.filmobil.constants.IMDB_SHARE_ID_URL
 
@@ -17,5 +21,13 @@ fun <T : Any> diffUtilCallback(
         areContentTheSameCallback(oldItem, newItem) ?: (oldItem == newItem)
 }
 
-fun loadImageFromUrl(posterPath: String?) = "${BuildConfig.API_IMAGE_URL}/${posterPath}"
+fun ImageView.loadImageFromApi(
+    imagePath: String?,
+    isDataSaverEnabled: Boolean,
+    builder: ImageRequest.Builder.() -> Unit = {}
+): Disposable {
+    val imageSize = if (isDataSaverEnabled) "w500" else "original"
+    return load("${BuildConfig.API_IMAGE_URL}/$imageSize/${imagePath}", builder = builder)
+}
+
 fun getImdbUrl(imdbId: String?) = "$IMDB_SHARE_ID_URL/${imdbId}"

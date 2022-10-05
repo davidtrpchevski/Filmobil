@@ -6,22 +6,26 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import coil.load
 import com.crazylegend.viewbinding.viewBinding
 import com.david.filmobil.R
+import com.david.filmobil.common.DataSaverPrefUtil
 import com.david.filmobil.databinding.FragmentDetailsBinding
 import com.david.filmobil.details.model.MovieDetailsModel
 import com.david.filmobil.details.viewmodel.DetailsViewModel
 import com.david.filmobil.network.result.ApiResult
-import com.david.filmobil.utils.loadImageFromUrl
+import com.david.filmobil.utils.loadImageFromApi
 import com.david.filmobil.utils.repeatOnLifecycleStarted
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     private val binding by viewBinding(FragmentDetailsBinding::bind)
     private val detailsViewModel: DetailsViewModel by viewModels()
+
+    @Inject
+    lateinit var dataSaverPrefUtil: DataSaverPrefUtil
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,8 +63,14 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     }
 
     private fun fillMovieDetails(movie: MovieDetailsModel) {
-        binding.movieDetailsBackdrop.load(loadImageFromUrl(movie.backdropPath))
-        binding.movieDetailsPoster.load(loadImageFromUrl(movie.posterPath))
+        binding.movieDetailsBackdrop.loadImageFromApi(
+            movie.backdropPath,
+            dataSaverPrefUtil.isDataSavingEnabled
+        )
+        binding.movieDetailsPoster.loadImageFromApi(
+            movie.posterPath,
+            dataSaverPrefUtil.isDataSavingEnabled
+        )
         binding.movieDetailsSummary.text = movie.overview
         binding.movieDetailsTagline.text = movie.tagline
         binding.movieDetailsYear.text = movie.releaseDate
