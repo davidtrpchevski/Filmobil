@@ -12,6 +12,9 @@ interface WatchlistMoviesDao {
     @Query("SELECT * FROM watchlist_table")
     fun getAllWatchlistMovies(): Flow<List<WatchlistMoviesModel>>
 
+    @Query("SELECT EXISTS(SELECT * FROM watchlist_table WHERE id= :watchlistMovieId)")
+    suspend fun isMovieInWatchlist(watchlistMovieId: Int?): Boolean
+
     @Insert
     suspend fun insertMovieToWatchlist(watchlistMoviesModel: WatchlistMoviesModel)
 

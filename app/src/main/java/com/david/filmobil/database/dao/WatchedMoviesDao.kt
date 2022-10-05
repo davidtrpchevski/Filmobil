@@ -13,6 +13,9 @@ interface WatchedMoviesDao {
     @Query("SELECT * FROM watched_table")
     fun getAllWatchedMovies(): Flow<List<WatchedMovieModel>>
 
+    @Query("SELECT EXISTS(SELECT * FROM watched_table WHERE id= :watchedMovieId)")
+    suspend fun isMovieInWatched(watchedMovieId: Int?): Boolean
+
     @Insert
     suspend fun insertWatchedMovie(watchedMovieModel: WatchedMovieModel)
 

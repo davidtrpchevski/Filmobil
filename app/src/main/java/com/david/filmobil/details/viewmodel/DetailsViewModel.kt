@@ -80,19 +80,27 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    fun insertMovieToWatchedList() {
+    fun handleMovieToWatchedList() {
+        val watchedMovie =
+            _movieDetails.value.getResultAsSuccess()?.mapToWatchedMovieModel() ?: return
         viewModelScope.launch {
-            watchedMoviesDao.insertWatchedMovie(
-                _movieDetails.value.getResultAsSuccess()?.mapToWatchedMovieModel() ?: return@launch
-            )
+            if (!watchedMoviesDao.isMovieInWatched(watchedMovie.id)) {
+                watchedMoviesDao.insertWatchedMovie(watchedMovie)
+            } else {
+                watchedMoviesDao.deleteWatchedMovie(watchedMovie)
+            }
         }
     }
 
-    fun insertMovieToWatchlist() {
+    fun handleMovieToWatchlist() {
+        val watchlistMovie =
+            _movieDetails.value.getResultAsSuccess()?.mapToWatchlistModel() ?: return
         viewModelScope.launch {
-            watchlistMoviesDao.insertMovieToWatchlist(
-                _movieDetails.value.getResultAsSuccess()?.mapToWatchlistModel() ?: return@launch
-            )
+            if (!watchlistMoviesDao.isMovieInWatchlist(watchlistMovie.id)) {
+                watchlistMoviesDao.insertMovieToWatchlist(watchlistMovie)
+            } else {
+                watchlistMoviesDao.deleteMovieFromWatchlist(watchlistMovie)
+            }
         }
     }
 }
