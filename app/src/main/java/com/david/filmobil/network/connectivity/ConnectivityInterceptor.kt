@@ -23,6 +23,7 @@ class ConnectivityInterceptor(private val connectivityManager: ConnectivityManag
         return networkCapabilities != null && (networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true ||
                 networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true ||
                 networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) == true ||
-                networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) == true)
+                networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) == true ||
+                networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_VPN) == true)
     }
 }
