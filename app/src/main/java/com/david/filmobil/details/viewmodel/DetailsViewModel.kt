@@ -68,9 +68,9 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun handleMovieIntoDatabase() {
+        val fetchedMovieDetails =
+            _movieDetails.value.getResultAsSuccess()?.mapToMovieDbModel() ?: return
         viewModelScope.launch {
-            val fetchedMovieDetails =
-                _movieDetails.value.getResultAsSuccess()?.mapToMovieDbModel() ?: return@launch
             if (_isMovieInFavorites.value) {
                 favoritesDao.deleteFavoriteMovie(fetchedMovieDetails)
             } else {
