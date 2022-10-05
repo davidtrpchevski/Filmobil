@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theming_entries">
+        <item>Dark mode</item>
+        <item>Light mode</item>
+        <item>Follow system</item>
+    </string-array>
+
+    <string-array name="theming_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>

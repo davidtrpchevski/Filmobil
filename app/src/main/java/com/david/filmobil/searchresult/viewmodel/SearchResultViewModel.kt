@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazylegend.toaster.Toaster
-import com.david.filmobil.di.dispatchers.IoDispatcher
+import com.david.filmobil.di.qualifiers.IoDispatcher
 import com.david.filmobil.network.RemoteService
 import com.david.filmobil.network.result.ApiResult
 import com.david.filmobil.network.result.unpackResult

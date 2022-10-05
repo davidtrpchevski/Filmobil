@@ -3,7 +3,7 @@ package com.david.filmobil.home.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crazylegend.toaster.Toaster
-import com.david.filmobil.di.dispatchers.IoDispatcher
+import com.david.filmobil.di.qualifiers.IoDispatcher
 import com.david.filmobil.home.model.MovieModel
 import com.david.filmobil.home.model.ResultModel
 import com.david.filmobil.network.RemoteService

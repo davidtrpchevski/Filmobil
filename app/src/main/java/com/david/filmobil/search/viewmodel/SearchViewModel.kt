@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.david.filmobil.database.dao.SearchHistoryDao
 import com.david.filmobil.database.entities.SearchHistoryModel
-import com.david.filmobil.di.dispatchers.IoDispatcher
+import com.david.filmobil.di.qualifiers.IoDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
