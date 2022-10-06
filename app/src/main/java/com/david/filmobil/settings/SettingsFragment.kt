@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
 import com.crazylegend.kotlinextensions.preferences.preference
 import com.david.filmobil.R
 import com.david.filmobil.common.ThemingModeUtil
-import com.david.filmobil.utils.DATA_SAVER_PREF_KEY
 import com.david.filmobil.utils.THEMING_PREF_KEY
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -16,7 +14,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    private val dataSaverPref by preference<SwitchPreferenceCompat>(DATA_SAVER_PREF_KEY)
     private val themingPref by preference<ListPreference>(THEMING_PREF_KEY)
 
     @Inject
