@@ -13,7 +13,6 @@ import com.david.filmobil.R
 import com.david.filmobil.databinding.FragmentHomeBinding
 import com.david.filmobil.home.adapter.MoviesAdapter
 import com.david.filmobil.home.viewmodel.HomeViewModel
-import com.david.filmobil.network.result.ApiResult
 import com.david.filmobil.utils.repeatOnLifecycleStarted
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -33,33 +32,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.moviesList.adapter = moviesAdapter
         repeatOnLifecycleStarted {
             homeViewModel.moviesList.collect {
-                moviesAdapter.submitList(it)
-                moviesAdapter.notifyItemInserted(it.lastIndex)
+                moviesAdapter.submitData(it)
             }
         }
-
-        repeatOnLifecycleStarted {
-            homeViewModel.resultMoviesList.collect { result ->
-                binding.moviesLoadingProgress.isVisible = result is ApiResult.Loading
-                when (result) {
-                    is ApiResult.Success -> {
-                        result.data.movieModels?.let { homeViewModel.saveList(it) }
-                    }
-                    else -> homeViewModel.showErrorToast(result)
-                }
-            }
-        }
-
-        binding.moviesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && !recyclerView.canScrollVertically(
-                        1
-                    )
-                ) {
-                    homeViewModel.getNextPage()
-                }
-            }
-        })
 
         moviesAdapter.onItemClick = { movieModel ->
             movieModel.id?.let {
