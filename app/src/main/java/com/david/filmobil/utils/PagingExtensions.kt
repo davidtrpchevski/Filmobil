@@ -4,8 +4,8 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.LoadType
 
-val CombinedLoadStates.shouldShowProgressBar: Boolean
-    get() = refresh is LoadState.Loading || append is LoadState.Loading
+val CombinedLoadStates.shouldShowProgressBarOnInitialLoad: Boolean
+    get() = refresh is LoadState.Loading
 
 val CombinedLoadStates.hasErrorOccurred: Boolean
     get() = append is LoadState.Error || refresh is LoadState.Error || prepend is LoadState.Error

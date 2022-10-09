@@ -17,6 +17,7 @@ import com.david.filmobil.home.viewmodel.HomeViewModel
 import com.david.filmobil.paging.MovieLoadStateAdapter
 import com.david.filmobil.utils.errorCheck
 import com.david.filmobil.utils.repeatOnLifecycleStarted
+import com.david.filmobil.utils.shouldShowProgressBarOnInitialLoad
 import com.david.filmobil.utils.showIndefiniteSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -69,6 +70,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
 
         moviesAdapter.addLoadStateListener {
+            binding.moviesLoadingProgress.isVisible = it.shouldShowProgressBarOnInitialLoad
             it.errorCheck(doOnInitialError = { throwable ->
                 showIndefiniteSnackBar(view, throwable, R.string.retry) { moviesAdapter.retry() }
             }, doOnPaginationError = { throwable -> showErrorToast(throwable) })
