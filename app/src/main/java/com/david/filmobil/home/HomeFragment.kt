@@ -70,7 +70,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
 
         moviesAdapter.addLoadStateListener {
-            binding.moviesLoadingProgress.isVisible = it.shouldShowProgressBarOnInitialLoad
+            binding.root.isRefreshing = it.shouldShowProgressBarOnInitialLoad
             it.errorCheck(doOnInitialError = { throwable ->
                 showIndefiniteSnackBar(view, throwable, R.string.retry) { moviesAdapter.retry() }
             }, doOnPaginationError = { throwable -> showErrorToast(throwable) })
@@ -78,6 +78,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         movieLoadStateAdapter.onRetry = {
             moviesAdapter.retry()
+        }
+
+        binding.root.setOnRefreshListener {
+            moviesAdapter.refresh()
         }
     }
 
