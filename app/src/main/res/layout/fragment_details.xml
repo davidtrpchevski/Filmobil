@@ -105,7 +105,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_to_favorites"
-        style="@style/Widget.MaterialComponents.Button.Icon"
+        style="@style/Widget.Material3.Button.Icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="12dp"
@@ -123,7 +123,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_to_watched"
-        style="@style/Widget.MaterialComponents.Button.Icon"
+        style="@style/Widget.Material3.Button.Icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="12dp"
@@ -141,7 +141,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_to_watchlist"
-        style="@style/Widget.MaterialComponents.Button.Icon"
+        style="@style/Widget.Material3.Button.Icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="12dp"

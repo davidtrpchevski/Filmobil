@@ -14,9 +14,9 @@ import com.david.filmobil.R
 import com.david.filmobil.databinding.FragmentHomeBinding
 import com.david.filmobil.home.adapter.MoviesAdapter
 import com.david.filmobil.home.viewmodel.HomeViewModel
+import com.david.filmobil.paging.MovieLoadStateAdapter
 import com.david.filmobil.utils.errorCheck
 import com.david.filmobil.utils.repeatOnLifecycleStarted
-import com.david.filmobil.utils.shouldShowProgressBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,13 +29,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     @Inject
     lateinit var toaster: Toaster
 
+    @Inject
+    lateinit var movieLoadStateAdapter: MovieLoadStateAdapter
+
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val homeViewModel by viewModels<HomeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.moviesList.adapter = moviesAdapter
+        binding.moviesList.adapter = moviesAdapter.withLoadStateFooter(movieLoadStateAdapter)
+
         repeatOnLifecycleStarted {
             homeViewModel.moviesList.collect {
                 moviesAdapter.submitData(it)
@@ -64,10 +68,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         })
 
         moviesAdapter.addLoadStateListener {
-            binding.moviesLoadingProgress.isVisible = it.shouldShowProgressBar
             it.errorCheck { throwable ->
                 showErrorToast(throwable)
             }
+        }
+
+        movieLoadStateAdapter.onRetry = {
+            moviesAdapter.retry()
         }
     }
 
