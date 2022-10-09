@@ -2,6 +2,7 @@ package com.david.filmobil.utils
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import androidx.paging.LoadType
 
 val CombinedLoadStates.shouldShowProgressBar: Boolean
     get() = refresh is LoadState.Loading || append is LoadState.Loading
@@ -9,11 +10,18 @@ val CombinedLoadStates.shouldShowProgressBar: Boolean
 val CombinedLoadStates.hasErrorOccurred: Boolean
     get() = append is LoadState.Error || refresh is LoadState.Error || prepend is LoadState.Error
 
-inline fun CombinedLoadStates.errorCheck(doOnError: (Throwable) -> Unit) {
+inline fun CombinedLoadStates.errorCheck(
+    doOnInitialError: (Throwable) -> Unit = { _ -> },
+    doOnPaginationError: (Throwable) -> Unit = { _ -> }
+) {
     if (hasErrorOccurred) {
-        source.forEach { _, loadState ->
+        source.forEach { loadType, loadState ->
             if (loadState is LoadState.Error) {
-                doOnError(loadState.error)
+                if (loadType == LoadType.REFRESH) {
+                    doOnInitialError(loadState.error)
+                } else {
+                    doOnPaginationError(loadState.error)
+                }
             }
         }
     }
