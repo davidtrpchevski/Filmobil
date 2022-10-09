@@ -8,12 +8,15 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.crazylegend.toaster.Toaster
 import com.crazylegend.viewbinding.viewBinding
 import com.david.filmobil.R
 import com.david.filmobil.databinding.FragmentHomeBinding
 import com.david.filmobil.home.adapter.MoviesAdapter
 import com.david.filmobil.home.viewmodel.HomeViewModel
+import com.david.filmobil.utils.errorCheck
 import com.david.filmobil.utils.repeatOnLifecycleStarted
+import com.david.filmobil.utils.shouldShowProgressBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +25,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     @Inject
     lateinit var moviesAdapter: MoviesAdapter
+
+    @Inject
+    lateinit var toaster: Toaster
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val homeViewModel by viewModels<HomeViewModel>()
@@ -56,5 +62,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 binding.toTop.isVisible = position >= 20
             }
         })
+
+        moviesAdapter.addLoadStateListener {
+            binding.moviesLoadingProgress.isVisible = it.shouldShowProgressBar
+            it.errorCheck { throwable ->
+                showErrorToast(throwable)
+            }
+        }
+    }
+
+    fun showErrorToast(throwable: Throwable) {
+        toaster.shortToast(throwable.message.toString())
     }
 }

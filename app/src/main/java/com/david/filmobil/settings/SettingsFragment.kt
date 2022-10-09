@@ -6,8 +6,8 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.crazylegend.kotlinextensions.preferences.preference
 import com.david.filmobil.R
+import com.david.filmobil.common.THEMING_PREF_KEY
 import com.david.filmobil.common.ThemingModeUtil
-import com.david.filmobil.utils.THEMING_PREF_KEY
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
