@@ -13,7 +13,7 @@ class MoviesViewHolder(private val binding: ItemViewMovieBinding) : ViewHolder(b
             movieDescription.text = movieModel.overview
             movieCover.loadImageFromApi(movieModel.posterPath, dataSavingEnabled) {
                 placeholder(R.drawable.ic_baseline_image)
-                crossfade(true)
+                crossfade(durationMillis = 1000)
             }
         }
     }
