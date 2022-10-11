@@ -3,7 +3,7 @@ package com.david.filmobil.favorites.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.david.filmobil.common.DataSaverPrefUtil
 import com.david.filmobil.database.entities.FavoriteMovieModel
@@ -13,9 +13,7 @@ import com.david.filmobil.utils.diffUtilCallback
 import javax.inject.Inject
 
 class FavoritesMovieAdapter @Inject constructor(private val dataSaverPrefUtil: DataSaverPrefUtil) :
-    ListAdapter<FavoriteMovieModel, FavoritesMovieViewHolder>(
-        diffUtilCallback<FavoriteMovieModel>()
-    ) {
+    PagingDataAdapter<FavoriteMovieModel, FavoritesMovieViewHolder>(diffUtilCallback()) {
 
     var onFavoriteClick: ((FavoriteMovieModel) -> Unit)? = null
     var onFavoriteLongClick: ((FavoriteMovieModel, View) -> Unit)? = null
@@ -27,14 +25,23 @@ class FavoritesMovieAdapter @Inject constructor(private val dataSaverPrefUtil: D
         holder.itemView.setOnClickListener {
             val position = holder.absoluteAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                onFavoriteClick?.invoke(getItem(position))
+                getItem(position)?.let { favoriteMovieModel ->
+                    onFavoriteClick?.invoke(
+                        favoriteMovieModel
+                    )
+                }
             }
         }
 
         holder.itemView.setOnLongClickListener {
             val position = holder.absoluteAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                onFavoriteLongClick?.invoke(getItem(position), holder.itemView)
+                getItem(position)?.let { favoriteMovieModel ->
+                    onFavoriteLongClick?.invoke(
+                        favoriteMovieModel,
+                        holder.itemView
+                    )
+                }
             }
             true
         }
@@ -42,6 +49,11 @@ class FavoritesMovieAdapter @Inject constructor(private val dataSaverPrefUtil: D
     }
 
     override fun onBindViewHolder(holder: FavoritesMovieViewHolder, position: Int) {
-        holder.bind(getItem(position), dataSaverPrefUtil.isDataSavingEnabled)
+        getItem(position)?.let { favoriteMovieModel ->
+            holder.bind(
+                favoriteMovieModel,
+                dataSaverPrefUtil.isDataSavingEnabled
+            )
+        }
     }
 }

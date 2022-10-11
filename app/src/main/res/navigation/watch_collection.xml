@@ -4,8 +4,22 @@
     android:id="@+id/watch_collection"
     app:startDestination="@id/watchCollectionFragment">
 
+    <include app:graph="@navigation/movie_details" />
+
     <fragment
         android:id="@+id/watchCollectionFragment"
         android:name="com.david.filmobil.watchmoviecollection.WatchCollectionFragment"
-        android:label="WatchCollectionFragment" />
+        android:label="WatchCollectionFragment">
+        <action
+            android:id="@+id/openMovieDetails"
+            app:destination="@+id/movie_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim">
+            <argument
+                android:name="movieId"
+                app:argType="integer" />
+        </action>
+    </fragment>
 </navigation>

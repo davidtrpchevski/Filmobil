@@ -35,6 +35,9 @@ class DetailsViewModel @Inject constructor(
     private val args = DetailsFragmentArgs.fromSavedStateHandle(savedStateHandle)
     private val movieId = args.movieId
 
+    private val _isAddToFabPressed = MutableStateFlow(false)
+    val isAddToFabPressed = _isAddToFabPressed.asStateFlow()
+
     private val _movieDetails = MutableStateFlow<ApiResult<MovieDetailsModel>>(ApiResult.Initial)
     val movieDetails = _movieDetails.asStateFlow()
 
@@ -102,5 +105,9 @@ class DetailsViewModel @Inject constructor(
                 watchlistMoviesDao.deleteMovieFromWatchlist(watchlistMovie)
             }
         }
+    }
+
+    fun setAddToFabPressStatus() {
+        _isAddToFabPressed.value = !_isAddToFabPressed.value
     }
 }

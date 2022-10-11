@@ -21,7 +21,9 @@
         android:layout_gravity="bottom"
         app:elevation="1dp"
         app:fabAlignmentMode="center"
-        app:fabAnchorMode="cradle">
+        app:fabAnchorMode="cradle"
+        app:hideOnScroll="true"
+        app:layout_scrollFlags="scroll|enterAlways">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
@@ -36,10 +38,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/search"
+        style="@style/Widget.Material3.FloatingActionButton.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/search"
         android:src="@drawable/ic_baseline_search"
-        app:layout_anchor="@id/bottomAppBar" />
-
+        app:fabSize="normal"
+        app:layout_anchor="@id/bottomAppBar"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

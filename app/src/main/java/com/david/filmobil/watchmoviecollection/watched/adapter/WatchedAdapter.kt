@@ -2,7 +2,7 @@ package com.david.filmobil.watchmoviecollection.watched.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.david.filmobil.common.DataSaverPrefUtil
 import com.david.filmobil.database.entities.WatchedMovieModel
@@ -11,9 +11,9 @@ import com.david.filmobil.utils.diffUtilCallback
 import javax.inject.Inject
 
 class WatchedAdapter @Inject constructor(private val dataSavingEnabled: DataSaverPrefUtil) :
-    ListAdapter<WatchedMovieModel, WatchedViewHolder>(diffUtilCallback<WatchedMovieModel>()) {
+    PagingDataAdapter<WatchedMovieModel, WatchedViewHolder>(diffUtilCallback()) {
 
-    var onClickListener: ((WatchedMovieModel) -> Unit)? = null
+    var onItemClick: ((WatchedMovieModel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchedViewHolder {
         val binding =
@@ -22,13 +22,22 @@ class WatchedAdapter @Inject constructor(private val dataSavingEnabled: DataSave
         holder.itemView.setOnClickListener {
             val position = holder.absoluteAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                onClickListener?.invoke(getItem(position))
+                getItem(position)?.let { watchedMovieModel ->
+                    onItemClick?.invoke(
+                        watchedMovieModel
+                    )
+                }
             }
         }
         return holder
     }
 
     override fun onBindViewHolder(holder: WatchedViewHolder, position: Int) {
-        holder.bind(getItem(position), dataSavingEnabled.isDataSavingEnabled)
+        getItem(position)?.let { watchedMovieModel ->
+            holder.bind(
+                watchedMovieModel,
+                dataSavingEnabled.isDataSavingEnabled
+            )
+        }
     }
 }

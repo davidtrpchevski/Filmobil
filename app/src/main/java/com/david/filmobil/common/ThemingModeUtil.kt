@@ -2,8 +2,8 @@ package com.david.filmobil.common
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
+import com.david.filmobil.constants.THEMING_PREF_KEY
 import com.david.filmobil.di.qualifiers.DefaultSharedPref
-import com.david.filmobil.utils.THEMING_PREF_KEY
 import javax.inject.Inject
 
 class ThemingModeUtil @Inject constructor(@DefaultSharedPref private val sharedPreferences: SharedPreferences) {

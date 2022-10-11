@@ -1,8 +1,8 @@
 package com.david.filmobil.common
 
 import android.content.SharedPreferences
+import com.david.filmobil.constants.DATA_SAVER_PREF_KEY
 import com.david.filmobil.di.qualifiers.DefaultSharedPref
-import com.david.filmobil.utils.DATA_SAVER_PREF_KEY
 import javax.inject.Inject
 
 class DataSaverPrefUtil @Inject constructor(@DefaultSharedPref private val sharedPreferences: SharedPreferences) {

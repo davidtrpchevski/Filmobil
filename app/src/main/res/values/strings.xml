@@ -11,4 +11,8 @@
     <string name="watched">Watched</string>
     <string name="query_search_hint">Search for movies</string>
     <string name="fragment_suffix">Fragment</string>
+    <string name="to_top">To Top</string>
+    <string name="generic_error_message">An error has occured</string>
+    <string name="retry">Retry</string>
+    <string name="watchlist">Watchlist</string>
 </resources>

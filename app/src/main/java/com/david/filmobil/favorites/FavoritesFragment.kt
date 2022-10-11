@@ -35,7 +35,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
         repeatOnLifecycleStarted {
             favoritesViewModel.favoritesMovieList.collect {
-                favoritesMovieAdapter.submitList(it)
+                favoritesMovieAdapter.submitData(it)
             }
         }
 

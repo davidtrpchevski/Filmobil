@@ -42,23 +42,35 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
         repeatOnLifecycleStarted {
             detailsViewModel.isMovieInFavorites.collect { isInFavorites ->
-                binding.addToFavorites.icon = AppCompatResources.getDrawable(
+                binding.addToFavoritesFab.icon = AppCompatResources.getDrawable(
                     requireContext(),
                     if (isInFavorites) R.drawable.ic_baseline_favorite else R.drawable.ic_baseline_favorite_border
                 )
             }
         }
 
-        binding.addToFavorites.setOnClickListener {
+        binding.addToFavoritesFab.setOnClickListener {
             detailsViewModel.handleMovieIntoDatabase()
         }
 
-        binding.addToWatched.setOnClickListener {
+        binding.addToWatchedFab.setOnClickListener {
             detailsViewModel.handleMovieToWatchedList()
         }
 
-        binding.addToWatchlist.setOnClickListener {
+        binding.addToWatchlistFab.setOnClickListener {
             detailsViewModel.handleMovieToWatchlist()
+        }
+
+        repeatOnLifecycleStarted {
+            detailsViewModel.isAddToFabPressed.collect {
+                binding.addToWatchlist.isVisible = it
+                binding.addToFavorites.isVisible = it
+                binding.addToWatched.isVisible = it
+            }
+        }
+
+        binding.addToFab.setOnClickListener {
+            detailsViewModel.setAddToFabPressStatus()
         }
     }
 
