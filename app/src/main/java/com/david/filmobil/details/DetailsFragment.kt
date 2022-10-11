@@ -49,15 +49,15 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             }
         }
 
-        binding.addToFavorites.setOnClickListener {
+        binding.addToFavoritesFab.setOnClickListener {
             detailsViewModel.handleMovieIntoDatabase()
         }
 
-        binding.addToWatched.setOnClickListener {
+        binding.addToWatchedFab.setOnClickListener {
             detailsViewModel.handleMovieToWatchedList()
         }
 
-        binding.addToWatchlist.setOnClickListener {
+        binding.addToWatchlistFab.setOnClickListener {
             detailsViewModel.handleMovieToWatchlist()
         }
 

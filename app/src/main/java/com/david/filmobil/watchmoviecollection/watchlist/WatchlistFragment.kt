@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.crazylegend.viewbinding.viewBinding
 import com.david.filmobil.R
 import com.david.filmobil.databinding.FragmentWatchlistBinding
 import com.david.filmobil.utils.repeatOnLifecycleCreated
+import com.david.filmobil.watchmoviecollection.WatchCollectionFragmentDirections
 import com.david.filmobil.watchmoviecollection.watchlist.adapter.WatchlistAdapter
 import com.david.filmobil.watchmoviecollection.watchlist.viewmodel.WatchlistViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +33,15 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
         repeatOnLifecycleCreated {
             watchlistViewModel.watchlistMoviesData.collect {
-                watchlistAdapter.submitList(it)
+                watchlistAdapter.submitData(it)
+            }
+        }
+
+        watchlistAdapter.onItemClick = { watchlistMoviesModel ->
+            watchlistMoviesModel.id?.let {
+                findNavController().navigate(
+                    WatchCollectionFragmentDirections.openMovieDetails(it)
+                )
             }
         }
     }
