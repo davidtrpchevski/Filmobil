@@ -2,7 +2,7 @@ package com.david.filmobil.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.david.filmobil.common.API_PAGING_STARTING_SIZE
+import com.david.filmobil.constants.API_PAGING_STARTING_SIZE
 import com.david.filmobil.home.model.MovieModel
 import com.david.filmobil.network.RemoteService
 import com.david.filmobil.network.result.ApiResult

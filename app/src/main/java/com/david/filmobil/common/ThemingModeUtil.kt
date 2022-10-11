@@ -2,6 +2,7 @@ package com.david.filmobil.common
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
+import com.david.filmobil.constants.THEMING_PREF_KEY
 import com.david.filmobil.di.qualifiers.DefaultSharedPref
 import javax.inject.Inject
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.david.filmobil.common.API_PAGING_STARTING_SIZE
+import com.david.filmobil.constants.API_PAGING_STARTING_SIZE
 import com.david.filmobil.network.RemoteService
 import com.david.filmobil.paging.HomePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
