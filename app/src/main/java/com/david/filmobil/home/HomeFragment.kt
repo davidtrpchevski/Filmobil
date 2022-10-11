@@ -2,7 +2,6 @@ package com.david.filmobil.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,6 +14,7 @@ import com.david.filmobil.databinding.FragmentHomeBinding
 import com.david.filmobil.home.adapter.MoviesAdapter
 import com.david.filmobil.home.viewmodel.HomeViewModel
 import com.david.filmobil.paging.MovieLoadStateAdapter
+import com.david.filmobil.utils.betterSmoothScrollToPosition
 import com.david.filmobil.utils.errorCheck
 import com.david.filmobil.utils.repeatOnLifecycleStarted
 import com.david.filmobil.utils.shouldShowProgressBarOnInitialLoad
@@ -57,7 +57,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         binding.toTop.setOnClickListener {
-            binding.moviesList.layoutManager?.scrollToPosition(0)
+            binding.moviesList.betterSmoothScrollToPosition(0)
         }
 
         binding.moviesList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -65,7 +65,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 super.onScrolled(recyclerView, dx, dy)
                 val position =
                     (binding.moviesList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                binding.toTop.isVisible = position >= 20
+                if (position >= 20) binding.toTop.show() else binding.toTop.hide()
             }
         })
 

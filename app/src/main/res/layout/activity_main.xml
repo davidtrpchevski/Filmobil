@@ -22,7 +22,8 @@
         app:elevation="1dp"
         app:fabAlignmentMode="center"
         app:fabAnchorMode="cradle"
-        app:hideOnScroll="true">
+        app:hideOnScroll="true"
+        app:layout_scrollFlags="scroll|enterAlways">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
