@@ -4,14 +4,13 @@ import android.content.Context
 import android.net.ConnectivityManager
 import com.david.filmobil.BuildConfig
 import com.david.filmobil.network.RemoteService
-import com.david.filmobil.network.connectivity.ConnectivityInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
@@ -25,21 +24,14 @@ object NetworkingModule {
     fun provideMoshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
 
     @Provides
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().apply {
-            level =
-                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-        }
-
-    @Provides
     fun provideOkHttp(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-        connectivityInterceptor: ConnectivityInterceptor
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .addInterceptor(connectivityInterceptor)
-            .build()
+        interceptorSet: Set<@JvmSuppressWildcards Interceptor>,
+    ): OkHttpClient = with(OkHttpClient.Builder()) {
+        interceptorSet.forEach {
+            addInterceptor(it)
+        }
+        build()
+    }
 
     @Provides
     @Singleton
@@ -48,7 +40,7 @@ object NetworkingModule {
         moshiConverterFactory: MoshiConverterFactory
     ): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BuildConfig.API_URL)
+            .baseUrl("${BuildConfig.API_URL}/${BuildConfig.API_VERSION}/")
             .client(okHttpClient)
             .addConverterFactory(moshiConverterFactory)
             .build()
@@ -59,8 +51,4 @@ object NetworkingModule {
     @Provides
     fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    @Provides
-    fun provideConnectivityInterceptor(connectivityManager: ConnectivityManager): ConnectivityInterceptor =
-        ConnectivityInterceptor(connectivityManager)
 }

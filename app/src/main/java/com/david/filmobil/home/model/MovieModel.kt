@@ -13,6 +13,8 @@ data class MovieModel(
     val genreIds: List<Int>?,
     @Json(name = "id")
     val id: Int?,
+    @Json(name = "media_type")
+    val mediaType: String?,
     @Json(name = "original_language")
     val originalLanguage: String?,
     @Json(name = "original_title")
@@ -32,5 +34,5 @@ data class MovieModel(
     @Json(name = "vote_average")
     val voteAverage: Double?,
     @Json(name = "vote_count")
-    val voteCount: Int?
+    val voteCount: Int?,
 )
